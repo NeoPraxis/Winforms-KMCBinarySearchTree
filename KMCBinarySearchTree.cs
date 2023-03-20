@@ -15,25 +15,22 @@
  *                      - added degree
  * 0.2   KMC 03/15/2023 - make the pointers private
  *                      - added an add method
+ *                      
+ * 0.3   KMC 03/20/2023 - Add In Order Traversal
  *                     
  * *******************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KMCBinarySearchTree
 {
     internal class KMCBinarySearchTree
     {
         #region enum
-        public enum Traversal : byte {  InOrder, PreOrder, PostOrder };
+        public enum Traversal : byte { InOrder, PreOrder, PostOrder };
         #endregion enum
 
         #region properties
-        
+
         // the root of the tree
         public KMCNode Root { get; set; }
         // the number of nodes in the tree
@@ -114,6 +111,102 @@ namespace KMCBinarySearchTree
             }
             return true;
         }
+        /// <summary>
+        /// PREORDER traversal
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<KMCNode> PreOrderTraversal()
+        {
+            foreach (KMCNode node in PreOrderTraversal(this.Root))
+            {
+                yield return node;
+            }
+        }
+
+        private IEnumerable<KMCNode> PreOrderTraversal(KMCNode currentParent)
+        {
+            if (currentParent != null)
+            {
+                // handle the parent 
+                yield return currentParent;
+
+                // handle left subtree
+                foreach (KMCNode node in PreOrderTraversal(currentParent.leftChild))
+                {
+                    yield return node;
+                }
+
+                // handle right subtree
+                foreach (KMCNode node in PreOrderTraversal(currentParent.rightChild))
+                {
+                    yield return node;
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method will traverse the binary search tree using an in order traversal (Left, Parent, Right)
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<KMCNode> InOrderTraversal()
+        {
+            foreach (KMCNode node in InOrderTraversal(this.Root))
+            {
+                yield return node;
+            }
+        }
+
+        private IEnumerable<KMCNode> InOrderTraversal(KMCNode currentParent)
+        {
+            if (currentParent != null)
+            {
+                // handle left subtree
+                foreach (KMCNode node in InOrderTraversal(currentParent.leftChild))
+                {
+                    yield return node;
+                }
+
+                // handle the parent 
+                yield return currentParent;
+
+                // handle right subtree
+                foreach (KMCNode node in InOrderTraversal(currentParent.rightChild))
+                {
+                    yield return node;
+                }
+            }
+        }
+
+        public IEnumerable<KMCNode> PostOrderTraversal()
+        {
+            foreach (KMCNode node in PreOrderTraversal(this.Root))
+            {
+                yield return node;
+            }
+        }
+
+        private IEnumerable<KMCNode> PostOrderTraversal(KMCNode currentParent)
+        {
+            if (currentParent != null)
+            {
+
+
+                // handle left subtree
+                foreach (KMCNode node in PostOrderTraversal(currentParent.leftChild))
+                {
+                    yield return node;
+                }
+
+                // handle right subtree
+                foreach (KMCNode node in PostOrderTraversal(currentParent.rightChild))
+                {
+                    yield return node;
+                }
+
+                // handle the parent 
+                yield return currentParent;
+            }
+        }
 
         /// <summary>
         /// This routine will return the maximum key value in the subtree defined by the node
@@ -124,7 +217,7 @@ namespace KMCBinarySearchTree
             return MaxValue(Root);
         }
 
-       
+
         public int MaxValue(KMCNode node)
         {
             int value = node.KeyValue;
@@ -143,7 +236,7 @@ namespace KMCBinarySearchTree
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-         
+
         public int MinValue()
         {
             return MinValue(Root);
@@ -161,6 +254,7 @@ namespace KMCBinarySearchTree
 
             return value;
         }
+
         #endregion methods
     }
 }

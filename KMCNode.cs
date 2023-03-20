@@ -80,9 +80,9 @@ namespace KMCBinarySearchTree
         public String Dump()
         {
             return String.Format("Key = {0}, Left Child = {1}, Right Child = {2}",
-                keyValue.ToString(),
-                leftChild == null ? "null" : leftChild.keyValue.ToString(),
-                rightChild == null ? "null" : rightChild.keyValue.ToString());
+                KeyValue.ToString(),
+                leftChild == null ? "null" : leftChild.KeyValue.ToString(),
+                rightChild == null ? "null" : rightChild.KeyValue.ToString());
 
         }
         #endregion methods
