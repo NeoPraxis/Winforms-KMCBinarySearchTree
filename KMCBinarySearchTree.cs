@@ -19,6 +19,7 @@
  * 0.3   KMC 03/20/2023 - Add In Order Traversal
  *                     
  * *******************************************************************/
+using System;
 using System.Collections.Generic;
 
 namespace KMCBinarySearchTree
@@ -255,6 +256,54 @@ namespace KMCBinarySearchTree
             return value;
         }
 
+
+        public IEnumerable<KMCNode> TraversalMethod(Traversal desiredTraversal)
+        {
+            switch (desiredTraversal)
+            {
+                case Traversal.PreOrder:
+                    foreach (KMCNode node in PreOrderTraversal())
+                    {
+                        yield return node;
+                    }
+                    break;
+                case Traversal.InOrder:
+                    foreach (KMCNode node in InOrderTraversal())
+                    {
+                        yield return node;
+                    }
+                    break;
+                case Traversal.PostOrder:
+                    foreach (KMCNode node in PostOrderTraversal())
+                    {
+                        yield return node;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentException();
+
+            }
+            //return null;
+        }
+
+        public KMCNode Search(int keyValue)
+        {
+            KMCNode current = this.Root;
+
+            while (current != null && current.KeyValue != keyValue)
+            {
+                if (keyValue.CompareTo(current.KeyValue) < 0)
+                {
+                    current = current.leftChild;
+                }
+                else
+                {
+                    current = current.rightChild;
+                }
+            }
+            return current;
+        }
         #endregion methods
     }
 }
